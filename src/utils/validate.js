@@ -13,7 +13,7 @@ exports.validateData = (data) => {
 
 exports.encrypt = async (password) => {
     try {
-        return await bcrypt.hashSync(password, 10);
+        return  bcrypt.hashSync(password, 10);
     } catch (e) {
         console.error(e);
         return e;

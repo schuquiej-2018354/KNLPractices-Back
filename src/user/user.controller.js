@@ -1,9 +1,35 @@
 'use strict'
 
 const User = require('./user.model')
+const Career = require('../career/career.model');
+const { encrypt } = require('../utils/validate')
 
 exports.test = (req, res) => {
     return res.send({ message: 'Test user running' });
+}
+
+exports.defaults = async (req, res) => {
+    try {
+        let defaultCareer = await Career.findOne({ name: 'DEFAULT' })
+        let admin = {
+            name: 'ADMIN',
+            surname: 'ADMIN',
+            email: 'ADMIN',
+            username: 'ADMIN',
+            password: 'ADMIN',
+            phone: 'ADMIN',
+            career: defaultCareer._id
+        }
+        admin.password = await encrypt(admin.password);
+        let existAdmin = await User.findOne({ username: admin.username });
+        if (existAdmin) return
+        let adminDefault = new User(admin)
+        await adminDefault.save()
+        return
+    } catch (e) {
+        console.error(e);
+        return res.status(500).send({ message: 'Error create admin default' })
+    }
 }
 
 exports.view = async (req, res) => {
