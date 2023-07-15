@@ -3,6 +3,9 @@
 const mongoose = require('mongoose');
 
 const publicationSchemma = mongoose.Schema({
+    image: {
+        type: String
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
@@ -20,7 +23,10 @@ const publicationSchemma = mongoose.Schema({
         type: String
     },
     time: {
-        type: Date
+        type: String
+    },
+    hour: {
+        type: String
     }
 }, {
     versionKey: false

@@ -6,6 +6,22 @@ exports.test = (req, res) => {
     return res.send({ message: 'Test career running' });
 }
 
+exports.defaults = async (req, res) => {
+    try {
+        let carrera = {
+            name: 'DEFAULT'
+        }
+        let existAdmin = await Career.findOne({ name: carrera.name });
+        if (existAdmin) return
+        let careeerDefault = new Career(carrera)
+        await careeerDefault.save()
+        return
+    } catch (e) {
+        console.error(e);
+        return res.status(500).send({ message: 'Error create career default' })
+    }
+}
+
 exports.add = async (req, res) => {
     try {
         let data = req.body
