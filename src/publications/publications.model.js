@@ -17,10 +17,16 @@ const publicationSchemma = mongoose.Schema({
         type: String
     },
     phone: {
-        type: String
+        type: String,
+        maxLength: 13,
+        minLength: 8
     },
     description: {
         type: String
+    },
+    career: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Career'
     },
     time: {
         type: String
