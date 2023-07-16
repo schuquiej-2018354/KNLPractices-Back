@@ -7,9 +7,9 @@ const multiparty = require('connect-multiparty')
 const upload = multiparty({ uploadDir: './upload/publication' })
 
 api.get('/test', publicationController.test);
-api.post('/add', publicationController.add);
+api.post('/add', upload, publicationController.add);
 api.put('/update/:id', publicationController.update);
 api.delete('/delete/:id', publicationController.delete);
-api.put('/uploadImage/:id', upload, publicationController.updloadImage)
+api.put('/uploadImage/:id', publicationController.updloadImage)
 
 module.exports = api;

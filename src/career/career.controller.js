@@ -9,12 +9,32 @@ exports.test = (req, res) => {
 exports.defaults = async (req, res) => {
     try {
         let carrera = {
-            name: 'DEFAULT'
+            name: 'Default'
         }
-        let existAdmin = await Career.findOne({ name: carrera.name });
-        if (existAdmin) return
-        let careeerDefault = new Career(carrera)
-        await careeerDefault.save()
+        let carreraIn = {
+            name: 'Informática'
+        }
+        let carreraMe = {
+            name: 'Mecánica Automotriz'
+        }
+        let carreraElc = {
+            name: 'Electricidad Industrial'
+        }
+        let carreraDi = {
+            name: 'Dibujo Técnico'
+        }
+        let carreraEl = {
+            name: 'Electrónica'
+        }
+        let career = await Career.findOne({ $or: [{ name: carrera.name }, { name: carreraIn.name }, { name: carreraMe.name }, { name: carreraElc.name }, { name: carreraDi.name }, { name: carreraEl.name }] });
+        if (career) return
+        let newCareer = new Career(carrera)
+        let newCareerIn = new Career(carreraIn)
+        let newCareerMe = new Career(carreraMe)
+        let newCareerElc = new Career(carreraElc)
+        let newCareerDi = new Career(carreraDi)
+        let newCareerEl = new Career(carreraEl)
+        await Promise.all([newCareer.save(), newCareerIn.save(), newCareerMe.save(), newCareerElc.save(), newCareerDi.save(), newCareerEl.save()])
         return
     } catch (e) {
         console.error(e);

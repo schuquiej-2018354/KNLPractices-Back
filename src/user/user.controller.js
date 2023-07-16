@@ -10,7 +10,7 @@ exports.test = (req, res) => {
 
 exports.defaults = async (req, res) => {
     try {
-        let defaultCareer = await Career.findOne({ name: 'DEFAULT' })
+        let defaultCareer = await Career.findOne({ name: 'Default' })
         let admin = {
             name: 'ADMIN',
             surname: 'ADMIN',
