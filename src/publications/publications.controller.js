@@ -9,17 +9,57 @@ exports.test = (req, res) => {
     return res.send({ message: 'Test publication running' });
 }
 
+exports.defaults = async (req, res) => {
+    try {
+        let publication1 = {
+            image: '',
+            user: '',
+            empress: '',
+            location: '',
+            phone: '',
+            description: '',
+            time: moment().subtract(10, 'days').calendar(),
+            hour: moment().format('LTS')
+        }
+        let publication2
+        let publication3
+    } catch (e) {
+        console.error(e);
+        return res.status(500).send({ message: 'Error adding publications' });
+    }
+}
+
+
 exports.add = async (req, res) => {
     try {
         let data = req.body;
         data.time = moment().subtract(10, 'days').calendar();
         data.hour = moment().format('LTS');
+
+        if (!req.files || !req.files.image || !req.files.image.type) {
+            return res.status(400).send({ message: 'No image file provided' });
+        }
+
+        const filePath = req.files.image.path;
+        const fileSplit = filePath.split('\\');
+        const fileName = fileSplit[2];
+        const extension = path.extname(fileName).toLowerCase();
+        const allowedExtensions = ['.png', '.jpg', '.jpeg', '.gif'];
+
+        if (!allowedExtensions.includes(extension)) {
+            fs.unlinkSync(filePath);
+            return res.status(400).send({ message: 'Invalid image file extension' });
+        }
+
+        data.image = fileName;
+
         let newPublication = new Publication(data);
         await newPublication.save();
+
         return res.status(200).send({ message: 'Publication created' });
     } catch (e) {
         console.error(e);
-        return res.status(500).send({ message: 'Error add publication' });
+        return res.status(500).send({ message: 'Error adding publication' });
     }
 }
 
@@ -51,7 +91,6 @@ exports.delete = async (req, res) => {
         return res.status(500).send({ message: 'Error deleted publication' })
     }
 }
-
 
 exports.updloadImage = async (req, res) => {
     try {
