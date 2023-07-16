@@ -35,7 +35,7 @@ exports.defaults = async (req, res) => {
         let newCareerDi = new Career(carreraDi)
         let newCareerEl = new Career(carreraEl)
         await Promise.all([newCareer.save(), newCareerIn.save(), newCareerMe.save(), newCareerElc.save(), newCareerDi.save(), newCareerEl.save()])
-        return
+        return 
     } catch (e) {
         console.error(e);
         return res.status(500).send({ message: 'Error create career default' })
