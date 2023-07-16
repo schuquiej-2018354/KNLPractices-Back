@@ -10,8 +10,9 @@ const port = process.env.PORT || 3200;
 const userRoutes = require('../src/user/user.routes');
 const questionRoutes = require('../src/question/question.routes');
 const publicationRoutes = require('../src/publications/publications.routes');
-const commentRoutes = require('../src/comment/comment.routes')
-const careerRoutes = require('../src/career/career.routes')
+const commentRoutes = require('../src/comment/comment.routes');
+const careerRoutes = require('../src/career/career.routes');
+const favoriteRoutes = require('../src/favorite/favorite.routes');
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -23,7 +24,8 @@ app.use('/user', userRoutes);
 app.use('/question', questionRoutes);
 app.use('/publication', publicationRoutes);
 app.use('/comment', commentRoutes);
-app.use('/career', careerRoutes)
+app.use('/career', careerRoutes);
+app.use('/favorite', favoriteRoutes);
 
 exports.initServer = () => {
     app.listen(port);

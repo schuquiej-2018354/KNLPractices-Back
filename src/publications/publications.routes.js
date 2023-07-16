@@ -10,6 +10,8 @@ api.get('/test', publicationController.test);
 api.post('/add', upload, publicationController.add);
 api.put('/update/:id', publicationController.update);
 api.delete('/delete/:id', publicationController.delete);
-api.put('/uploadImage/:id', publicationController.updloadImage)
+api.put('/uploadImage/:id', publicationController.updloadImage);
+api.get('/get', publicationController.get);
+api.get('/get-image/:fileName', upload, publicationController.getImage)
 
 module.exports = api;
