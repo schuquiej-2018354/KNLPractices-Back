@@ -7,6 +7,7 @@ const Career = require('../career/career.model');
 const path = require('path')
 const fs = require('fs')
 const moment = require('moment')
+const User = require('../user/user.model');
 
 exports.test = (req, res) => {
     return res.send({ message: 'Test publication running' });
@@ -275,6 +276,28 @@ exports.add = async (req, res) => {
     }
 }
 
+exports.defaults = async (req, res) => {
+    try {
+        let admin = await User.findOne({ name: 'ADMIN' })
+        let publication1 = {
+            image: 'apocosi2.jpg',
+            user: admin._id,
+            empress: 'CocaCola',
+            location: 'Zona 14 21-78',
+            phone: '74125638',
+            description: 'XD',
+            time: moment().subtract(10, 'days').calendar(),
+            hour: moment().format('LTS')
+        }
+        let newPublication1 = new Publication(publication1)
+        await newPublication1.save();
+        return
+    } catch (e) {
+        console.error(e);
+        return res.status(500).send({ message: 'Error adding publications' });
+    }
+}
+
 exports.update = async (req, res) => {
     try {
         let idPublication = req.params.id;
@@ -332,5 +355,28 @@ exports.updloadImage = async (req, res) => {
     } catch (e) {
         console.error(e);
         return res.status(500).send({ message: 'Error upload image' });
+    }
+}
+
+exports.get = async(req, res) => {
+    try{
+        const publications = await Publication.find().populate('user');
+        return res.status(200).send({ publications });
+    }catch(e){
+        console.error(e);
+        return res.status(500).send({message: 'Error getting'})
+    }
+}
+
+exports.getImage = async(req, res)=>{
+    try{
+        const fileName = req.params.fileName;
+        const filePath = `./upload/publication/${fileName}`
+        const image = fs.existsSync(filePath)
+        if(!image) return res.status(404).send({message: 'Image not found'})
+        return res.sendFile(path.resolve(filePath));
+    }catch(err){
+        console.error(err);
+        return res.status(500).send({message: 'Error getting image'})
     }
 }
