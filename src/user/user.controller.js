@@ -75,6 +75,7 @@ exports.add = async (req, res) => {
         let existsUserEmail = await User.findOne({ email: data.email });
         if (existsUserEmail) return res.send({ message: 'Email already exists' });
         data.password = await encrypt(data.password)
+        data.role = 'USER'
         let newUser = new User(data);
         await newUser.save();
         return res.status(200).send({ message: 'User created' });

@@ -24,6 +24,10 @@ const userSchemma = mongoose.Schema({
     career: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Career'
+    },
+    role: {
+        type: String,
+        uppercase: true
     }
 }, {
     versionKey: false
