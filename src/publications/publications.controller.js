@@ -7,7 +7,6 @@ const Career = require('../career/career.model');
 const path = require('path')
 const fs = require('fs')
 const moment = require('moment')
-const User = require('../user/user.model');
 
 exports.test = (req, res) => {
     return res.send({ message: 'Test publication running' });

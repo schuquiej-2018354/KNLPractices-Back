@@ -6,6 +6,7 @@ const api = express.Router();
 
 api.get('/test', userController.test);
 api.post('/add', userController.add);
+api.post('/login', userController.login);
 api.put('/update/:id', userController.update);
 api.delete('/delete/:id', userController.delete);
 
