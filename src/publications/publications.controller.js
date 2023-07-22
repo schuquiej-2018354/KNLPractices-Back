@@ -275,28 +275,6 @@ exports.add = async (req, res) => {
     }
 }
 
-exports.defaults = async (req, res) => {
-    try {
-        let admin = await User.findOne({ name: 'ADMIN' })
-        let publication1 = {
-            image: 'apocosi2.jpg',
-            user: admin._id,
-            empress: 'CocaCola',
-            location: 'Zona 14 21-78',
-            phone: '74125638',
-            description: 'XD',
-            time: moment().subtract(10, 'days').calendar(),
-            hour: moment().format('LTS')
-        }
-        let newPublication1 = new Publication(publication1)
-        await newPublication1.save();
-        return
-    } catch (e) {
-        console.error(e);
-        return res.status(500).send({ message: 'Error adding publications' });
-    }
-}
-
 exports.update = async (req, res) => {
     try {
         let idPublication = req.params.id;

@@ -35,7 +35,7 @@ exports.defaults = async (req, res) => {
         let newCareerDi = new Career(carreraDi)
         let newCareerEl = new Career(carreraEl)
         await Promise.all([newCareer.save(), newCareerIn.save(), newCareerMe.save(), newCareerElc.save(), newCareerDi.save(), newCareerEl.save()])
-        return 
+        return
     } catch (e) {
         console.error(e);
         return res.status(500).send({ message: 'Error create career default' })
@@ -82,5 +82,16 @@ exports.delete = async (req, res) => {
     } catch (e) {
         console.log(e);
         return res.status(500).send({ message: 'Error deleting career' })
+    }
+}
+
+
+exports.get = async (req, res) => {
+    try {
+        let careers = await Career.find();
+        return res.send({ careers });
+    } catch (e) {
+        console.log(e);
+        return res.status(500).send({ message: 'Error gettings careers' })
     }
 }
