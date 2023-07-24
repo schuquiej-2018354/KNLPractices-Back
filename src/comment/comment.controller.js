@@ -46,3 +46,15 @@ exports.delete = async (req, res) => {
         return res.status(500).send({ message: 'Error deleted comment' });
     }
 }
+
+exports.getByPublication = async (req, res) => {
+    try{
+        let { id } = req.params;
+        const comments = await Comment.find({publication: id}).populate('user');
+        if(!comments) return res.send({message: 'there are no comments'})
+        return res.status(200).send({comments});
+    }catch(e){
+        console.error(e);
+        return res.status(500).send({message: 'Publications not found'})
+    }
+}

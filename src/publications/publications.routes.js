@@ -12,6 +12,7 @@ api.put('/update/:id', publicationController.update);
 api.delete('/delete/:id', publicationController.delete);
 api.put('/uploadImage/:id', publicationController.updloadImage);
 api.get('/get', publicationController.get);
+api.get('/getById/:id', publicationController.getById);
 api.get('/get-image/:fileName', upload, publicationController.getImage)
 
 module.exports = api;
