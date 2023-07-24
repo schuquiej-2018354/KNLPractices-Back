@@ -2,7 +2,8 @@
 
 const User = require('./user.model')
 const Career = require('../career/career.model');
-const { encrypt } = require('../utils/validate')
+const { encrypt, checkPassword } = require('../utils/validate')
+const { createToken } = require('../utils/jwt')
 
 exports.test = (req, res) => {
     return res.send({ message: 'Test user running' });
@@ -32,6 +33,32 @@ exports.defaults = async (req, res) => {
     }
 }
 
+
+exports.login = async (req, res) => {
+    try {
+        let data = req.body
+        if (!data.email || !data.password) return res.send({ message: 'Check that all fields are complete' });
+        let user = await User.findOne({ email: data.email });
+        if (user && await checkPassword(data.password, user.password)) {
+            let token = await createToken(user)
+            let userLogged = {
+                id: user._id,
+                name: user.name,
+                username: user.username,
+                surname: user.surname,
+                email: user.email,
+                phone: user.phone,
+                career: user.career,
+                role: user.role
+            }
+            return res.send({ message: 'User logged succesfully', token, userLogged })
+        }
+        return res.status(404).send({ message: 'Invalid Credentials' })
+    } catch (e) {
+        console.log(e);
+        return res.status(500).send({ message: 'Invalid credentials' })
+    }
+}
 exports.view = async (req, res) => {
     try {
         let users = await User.find();
@@ -49,6 +76,8 @@ exports.add = async (req, res) => {
         if (existsUserUsername) return res.send({ message: 'UserName already exists' });
         let existsUserEmail = await User.findOne({ email: data.email });
         if (existsUserEmail) return res.send({ message: 'Email already exists' });
+        data.password = await encrypt(data.password)
+        data.role = 'USER'
         let newUser = new User(data);
         await newUser.save();
         return res.status(200).send({ message: 'User created' });

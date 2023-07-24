@@ -2,6 +2,8 @@
 
 const Question = require('./question.model');
 
+const moment = require('moment')
+
 exports.test = (req, res) => {
     return res.send({ message: 'Test question running' });
 }
@@ -20,6 +22,7 @@ exports.add = async (req, res) => {
     try {
         let data = req.body;
         let newQuestion = new Question(data);
+        data.time = moment().subtract(10, 'days').calendar()
         await newQuestion.save();
         return res.status(200).send({ message: 'Question created' });
     } catch (e) {
