@@ -87,7 +87,7 @@ exports.defaults = async (req, res) => {
             hour: moment().format('LTS')
         }
         let publication7 = {
-            image: 'Eggsa.jpg',
+            image: 'Eegsa.jpg',
             user: admin._id,
             empress: 'Eggsa',
             location: 'Zona 15 12',
@@ -109,7 +109,7 @@ exports.defaults = async (req, res) => {
             hour: moment().format('LTS')
         }
         let publication9 = {
-            image: 'Kemik.jpg',
+            image: 'Kemik.png',
             user: admin._id,
             empress: 'Kemik',
             location: 'Zona 15 12',
