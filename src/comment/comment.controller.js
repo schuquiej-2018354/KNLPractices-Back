@@ -2,6 +2,8 @@
 
 const Comment = require('./comment.model');
 
+const moment = require('moment')
+
 exports.test = (req, res) => {
     return res.send({ message: 'Test comment running' });
 }
@@ -10,6 +12,7 @@ exports.add = async (req, res) => {
     try {
         let data = req.body;
         let newComment = new Comment(data);
+        data.time = moment().subtract(10, 'days').calendar()
         await newComment.save();
         return res.status(200).send({ message: 'Comment created' });
     } catch (e) {
