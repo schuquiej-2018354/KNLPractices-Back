@@ -3,7 +3,6 @@
 const Publication = require('./publications.model');
 const User = require('../user/user.model');
 const Career = require('../career/career.model');
-
 const path = require('path')
 const fs = require('fs')
 const moment = require('moment')
@@ -212,7 +211,7 @@ exports.defaults = async (req, res) => {
         let newPublication4 = new Publication(publication4);
         let newPublication5 = new Publication(publication5);
         let newPublication6 = new Publication(publication6);
-        let newPublication7 = new Publication(publication7); 
+        let newPublication7 = new Publication(publication7);
         let newPublication8 = new Publication(publication8);
         let newPublication9 = new Publication(publication9);
         let newPublication10 = new Publication(publication10);
@@ -335,25 +334,25 @@ exports.updloadImage = async (req, res) => {
     }
 }
 
-exports.get = async(req, res) => {
-    try{
+exports.get = async (req, res) => {
+    try {
         const publications = await Publication.find().populate('user');
         return res.status(200).send({ publications });
-    }catch(e){
+    } catch (e) {
         console.error(e);
-        return res.status(500).send({message: 'Error getting'})
+        return res.status(500).send({ message: 'Error getting' })
     }
 }
 
-exports.getImage = async(req, res)=>{
-    try{
+exports.getImage = async (req, res) => {
+    try {
         const fileName = req.params.fileName;
         const filePath = `./upload/publication/${fileName}`
         const image = fs.existsSync(filePath)
-        if(!image) return res.status(404).send({message: 'Image not found'})
+        if (!image) return res.status(404).send({ message: 'Image not found' })
         return res.sendFile(path.resolve(filePath));
-    }catch(err){
+    } catch (err) {
         console.error(err);
-        return res.status(500).send({message: 'Error getting image'})
+        return res.status(500).send({ message: 'Error getting image' })
     }
 }
