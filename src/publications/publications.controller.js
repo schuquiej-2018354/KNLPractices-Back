@@ -356,6 +356,18 @@ exports.getById = async(req, res)=>{
     }
 }
 
+exports.getByCareer = async(req, res) => {
+    try {
+        const { id } = req.params;
+        const publications = await Publication.find({career: id}).populate('user').populate('career');
+        if(!publications) return res.send({message: 'There are no publications'})
+        return res.status(200).send({publications});
+    }catch(e){
+        console.error(e);
+        return res.status(500).send({message: 'Error getting'})
+    }
+}
+
 exports.getImage = async(req, res)=>{
     try{
         const fileName = req.params.fileName;
