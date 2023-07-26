@@ -11,8 +11,8 @@ exports.test = (req, res) => {
 exports.add = async (req, res) => {
     try {
         let data = req.body;
-        let newComment = new Comment(data);
         data.time = moment().subtract(10, 'days').calendar()
+        let newComment = new Comment(data);
         await newComment.save();
         return res.status(200).send({ message: 'Comment created' });
     } catch (e) {
