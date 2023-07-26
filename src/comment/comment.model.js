@@ -11,7 +11,7 @@ const commentSchemma = mongoose.Schema({
         type: String
     },
     time: {
-        type: Date
+        type: String
     },
     publication: {
         type: mongoose.Schema.Types.ObjectId,
