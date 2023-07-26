@@ -4,6 +4,9 @@ const User = require('./user.model')
 const Career = require('../career/career.model');
 const { encrypt, checkPassword } = require('../utils/validate')
 const { createToken } = require('../utils/jwt')
+const upload = require('../multer/multer')
+const path = require('path');
+const fs = require('fs');
 
 exports.test = (req, res) => {
     return res.send({ message: 'Test user running' });
@@ -13,6 +16,7 @@ exports.defaults = async (req, res) => {
     try {
         let defaultCareer = await Career.findOne({ name: 'Default' })
         let admin = {
+            image: 'Default.png',
             name: 'ADMIN',
             surname: 'ADMIN',
             email: 'ADMIN',
@@ -33,7 +37,6 @@ exports.defaults = async (req, res) => {
     }
 }
 
-
 exports.login = async (req, res) => {
     try {
         let data = req.body
@@ -42,6 +45,7 @@ exports.login = async (req, res) => {
         if (user && await checkPassword(data.password, user.password)) {
             let token = await createToken(user)
             let userLogged = {
+                image: user.image,
                 id: user._id,
                 name: user.name,
                 username: user.username,
@@ -59,6 +63,7 @@ exports.login = async (req, res) => {
         return res.status(500).send({ message: 'Invalid credentials' })
     }
 }
+
 exports.view = async (req, res) => {
     try {
         let users = await User.find();
@@ -78,6 +83,7 @@ exports.add = async (req, res) => {
         if (existsUserEmail) return res.send({ message: 'Email already exists' });
         data.password = await encrypt(data.password)
         data.role = 'USER'
+        data.image = 'Default.png';
         let newUser = new User(data);
         await newUser.save();
         return res.status(200).send({ message: 'User created' });
@@ -96,10 +102,10 @@ exports.update = async (req, res) => {
         if (existsUserUsername) return res.send({ message: 'UserName already exists' });
         let existsUserEmail = await User.findOne({ email: data.email });
         if (existsUserEmail) return res.send({ message: 'Email already exists' });
-        let updatedUser = User.findOneAndUpdate(
+        let updatedUser = await User.findOneAndUpdate(
             { _id: idUser },
             data,
-            { new: true }
+            { new: true, upsert: true }
         )
         if (!updatedUser) return res.send({ message: 'User not found and not update' });
         return res.send({ message: 'User updated', idUser })
@@ -108,6 +114,45 @@ exports.update = async (req, res) => {
         return res.status(500).send({ message: 'Error updating user' })
     }
 }
+
+exports.updateImage = async (req, res) => {
+    try {
+        // Guarda el nombre del archivo de la imagen subida en el objeto 'data'
+        if (req.file) req.body.image = req.file.filename;
+        let idUser = req.params.id;
+        let data = req.body;
+        let user = await User.findOne({ _id: idUser });
+        if (user.image !== 'Default.png' && user.image !== data.image) {
+            // Eliminar la imagen anterior
+            const imagePath = path.join(__dirname, '../../uploads', user.image);
+            fs.unlinkSync(imagePath);
+        }
+        let updatedUser = await User.findOneAndUpdate(
+            { _id: idUser },
+            { image: data.image }, // Actualiza solo el campo de la imagen
+            { new: true }
+        )
+        if (!updatedUser) return res.send({ message: 'User not found and not update' });
+        return res.send({ message: updatedUser })
+    } catch (e) {
+        console.error(e);
+        return res.status(500).send({ message: 'Error updating user image' })
+    }
+}
+
+exports.getImage = async (req, res) => {
+    try {
+        const fileName = req.params.fileName;
+        if (!fileName) return res.status(400).send({ message: 'Nombre de archivo no proporcionado' });
+        // La ruta completa de la imagen será 'uploads/' + el nombre del archivo proporcionado
+        const imagePath = path.join(__dirname, '../../uploads', fileName);
+        // Envía la imagen como una respuesta de tipo imagen
+        res.sendFile(imagePath);
+    } catch (e) {
+        console.error(e);
+        return res.status(500).send({ message: 'Error al obtener la imagen' });
+    }
+};
 
 exports.delete = async (req, res) => {
     try {
