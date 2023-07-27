@@ -41,7 +41,7 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
     try {
         let idComment = req.params.id;
-        let commentDeleted = await User.findOneAndDelete({ _id: idComment });
+        let commentDeleted = await Comment.findOneAndDelete({ _id: idComment });
         if (!commentDeleted) return res.send({ message: 'Comment not found and not deleted' });
         return res.send({ message: 'Comment deleting succesfully' });
     } catch (e) {

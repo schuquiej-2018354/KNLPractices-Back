@@ -13,6 +13,7 @@ const publicationRoutes = require('../src/publications/publications.routes');
 const commentRoutes = require('../src/comment/comment.routes');
 const careerRoutes = require('../src/career/career.routes');
 const favoriteRoutes = require('../src/favorite/favorite.routes');
+const questionResponseRoutes = require('../src/questionResponse/questionResponse.routes');
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -22,10 +23,12 @@ app.use(cors());
 
 app.use('/user', userRoutes);
 app.use('/question', questionRoutes);
+app.use('/questionResponse', questionResponseRoutes);
 app.use('/publication', publicationRoutes);
 app.use('/comment', commentRoutes);
 app.use('/career', careerRoutes);
 app.use('/favorite', favoriteRoutes);
+
 
 exports.initServer = () => {
     app.listen(port);
