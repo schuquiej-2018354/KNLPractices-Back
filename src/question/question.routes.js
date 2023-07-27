@@ -8,5 +8,6 @@ api.get('/test', questionController.test);
 api.post('/add', questionController.add);
 api.put('/update/:id', questionController.update);
 api.delete('/delete/:id', questionController.delete);
+api.get('/get', questionController.get);
 
 module.exports = api;
