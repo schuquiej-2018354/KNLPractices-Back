@@ -88,10 +88,13 @@ exports.delete = async (req, res) => {
 
 exports.get = async (req, res) => {
     try {
-        let careers = await Career.find();
+        // Buscar la carrera "default" en la base de datos
+        const defaultCareer = await Career.findOne({ name: "Default" });
+        // Obtener todas las carreras excepto la "default"
+        let careers = await Career.find({ _id: { $ne: defaultCareer._id } });
         return res.send({ careers });
     } catch (e) {
         console.log(e);
-        return res.status(500).send({ message: 'Error gettings careers' })
+        return res.status(500).send({ message: 'Error getting careers' });
     }
-}
+};

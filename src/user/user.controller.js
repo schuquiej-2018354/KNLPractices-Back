@@ -2,7 +2,7 @@
 
 const User = require('./user.model')
 const Career = require('../career/career.model');
-const { encrypt, checkPassword } = require('../utils/validate')
+const { encrypt, checkPassword, checkUpdate } = require('../utils/validate')
 const { createToken } = require('../utils/jwt')
 const upload = require('../multer/multer')
 const path = require('path');
@@ -93,7 +93,7 @@ exports.add = async (req, res) => {
     }
 }
 
-exports.update = async (req, res) => {
+/* exports.update = async (req, res) => {
     try {
         let idUser = req.params.id;
         let data = req.body;
@@ -113,7 +113,31 @@ exports.update = async (req, res) => {
         console.error(e);
         return res.status(500).send({ message: 'Error updating user' })
     }
+} */
+
+exports.update = async (req, res) => {
+    try {
+        //Obtener el Id del usuario a actualizar;
+        let userId = req.params.id
+        //Obtener los datos a actualizar
+        let data = req.body
+        //Validar si tiene permisos
+        //Validar que le llegue data a actualizar
+        let update = checkUpdate(data, true)
+        if (!update) return res.status(400).send({ message: 'Have submitted some data that cannot be updated' })
+        let userUpdated = await User.findOneAndUpdate(
+            { _id: userId },
+            data,
+            { new: true }
+        )
+        if (!userUpdated) return res.status(404).send({ message: 'User not found adn not updated' })
+        return res.send({ message: 'User updated', userUpdated })
+    } catch (err) {
+        console.error(err)
+        return res.status(500).send({ message: 'Error not updated', err: `Username ${err.keyValue.username} is already taken` })
+    }
 }
+
 
 exports.updateImage = async (req, res) => {
     try {
@@ -163,5 +187,16 @@ exports.delete = async (req, res) => {
     } catch (e) {
         console.error(e);
         return res.status(404).send({ message: 'Error deleting user' });
+    }
+}
+
+exports.getById = async (req, res) => {
+    try {
+        let idUser = req.params.id;
+        let existsCareer = await User.findOne({ _id: idUser }).populate('career')
+        return res.send({ message: existsCareer });
+    } catch (e) {
+        console.log(e);
+        return res.status(500).send({ message: 'Error getting career' })
     }
 }
