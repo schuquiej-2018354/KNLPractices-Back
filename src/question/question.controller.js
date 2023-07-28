@@ -59,3 +59,15 @@ exports.delete = async (req, res) => {
         return res.status(500).send({ message: 'Error deleting question' });
     }
 }
+
+
+exports.getById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const questions = await Question.find({ user: id }).populate('user');
+        return res.status(200).send({ questions });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).send({ message: 'Error getting' })
+    }
+}

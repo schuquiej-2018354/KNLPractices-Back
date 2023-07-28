@@ -2,9 +2,11 @@
 
 const User = require('./user.model')
 const Career = require('../career/career.model');
-const { encrypt, checkPassword, checkUpdate } = require('../utils/validate')
-const { createToken } = require('../utils/jwt')
-const upload = require('../multer/multer')
+const Publication = require('../publications/publications.model');
+const Question = require('../question/question.model');
+const { encrypt, checkPassword, checkUpdate } = require('../utils/validate');
+const { createToken } = require('../utils/jwt');
+const upload = require('../multer/multer');
 const path = require('path');
 const fs = require('fs');
 
