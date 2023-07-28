@@ -7,7 +7,6 @@ const upload = require('../multer/multer')
 
 api.get('/test', userController.test);
 api.get('/get-image/:fileName', userController.getImage);
-
 api.get('/getById/:id', userController.getById);
 
 api.post('/add', userController.add);

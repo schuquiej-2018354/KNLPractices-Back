@@ -381,13 +381,3 @@ exports.getImage = async (req, res) => {
 }
 
 
-exports.getPuQue = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const publications = await Publication.find({ user: id }).populate('user');
-        return res.status(200).send({ publications });
-    } catch (error) {
-        console.error(err);
-        return res.status(500).send({ message: 'Error getting publication and questions' })
-    }
-}
