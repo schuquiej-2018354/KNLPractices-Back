@@ -28,3 +28,23 @@ exports.checkPassword = async (password, hash) => {
         return false;
     }
 }
+
+exports.checkUpdate = (data, isUser)=>{
+    if(isUser){
+        if( data.password == '' ||
+            data.password ||
+            Object.entries(data).length === 0 || 
+            data.role
+        ){
+            return false;
+        }
+        return true
+    }else{
+        if( Object.entries(data).length === 0 || 
+            data.user ||
+            data.user == ''){
+            return false;
+        }
+        return true
+    }
+}
