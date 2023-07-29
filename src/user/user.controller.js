@@ -68,8 +68,8 @@ exports.login = async (req, res) => {
 
 exports.view = async (req, res) => {
     try {
-        let users = await User.find();
-        return res.status(200).send({ message: users });
+        let users = await User.find().populate('career');
+        return res.send({ users })
     } catch (e) {
         console.error(e);
         return res.status(500).send({ message: 'Error view users' })
