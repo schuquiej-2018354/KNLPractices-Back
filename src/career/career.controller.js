@@ -60,7 +60,7 @@ exports.update = async (req, res) => {
     try {
         let idCareer = req.params.id
         let data = req.body
-        let updatedCareer = Career.findOneAndUpdate(
+        let updatedCareer = await Career.findOneAndUpdate(
             { _id: idCareer },
             data,
             { new: true }
