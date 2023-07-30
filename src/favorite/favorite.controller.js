@@ -12,7 +12,7 @@ exports.add = async (req, res) => {
         if (alreadyFavorite) return res.send({ message: 'Ya agregado a favorito' });
         const newFavorite = new Favorite(data);
         await newFavorite.save();
-        return res.status(200).send({ message: 'added to favorites' });
+        return res.status(200).send({ message: 'Agregado a Favoritos' });
     } catch (e) {
         console.error(e);
         return res.status(500).send({ message: 'Error adding' })
