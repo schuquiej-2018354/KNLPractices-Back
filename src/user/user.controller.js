@@ -70,7 +70,6 @@ exports.login = async (req, res) => {
 exports.view = async (req, res) => {
     try {
         let usersAdmin = await User.findOne({ role: 'ADMIN' });
-        console.log(usersAdmin);
         let users = await User.find({ role: { $ne: usersAdmin.role } }).populate('career');
         return res.send({ users })
     } catch (e) {
