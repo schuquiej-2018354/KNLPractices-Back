@@ -336,7 +336,7 @@ exports.updloadImage = async (req, res) => {
 
 exports.get = async (req, res) => {
     try {
-        const publications = await Publication.find().populate('user');
+        const publications = await Publication.find().populate('user').populate('career');
         return res.status(200).send({ publications });
     } catch (e) {
         console.error(e);

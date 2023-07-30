@@ -26,3 +26,15 @@ exports.getByQuestion = async(req, res) => {
         return res.status(500).send({message: 'Error getting'})
     }
 }
+
+exports.delete = async (req, res) => {
+    try {
+        let id = req.params.id;
+        let  responseDeleted = await QuestionResponse.findOneAndDelete({ _id: id });
+        if (!responseDeleted) return res.send({ message: 'Comment not found and not deleted' });
+        return res.status(200).send({ message: 'Comment deleting succesfully' });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).send({ message: 'Error deleted comment' });
+    }
+}
