@@ -194,9 +194,9 @@ exports.delete = async (req, res) => {
 
 exports.getById = async (req, res) => {
     try {
-        let idUser = req.params.id;
-        let existsCareer = await User.findOne({ _id: idUser }).populate('career')
-        return res.send({ message: existsCareer });
+        let { id } = req.params;
+        let existsUser = await User.findOne({ _id: id }).populate('career')
+        return res.send({ existsUser });
     } catch (e) {
         console.log(e);
         return res.status(500).send({ message: 'Error getting career' })

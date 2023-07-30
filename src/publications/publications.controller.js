@@ -380,4 +380,15 @@ exports.getImage = async (req, res) => {
     }
 }
 
+exports.getUser = async (req, res) => {
+    try {
+        let { id } = req.params
+        let user = await Publication.find({ user: id });
+        return res.status(200).send({ user });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send({ message: 'Error getting image' })
+    }
+}
+
 
