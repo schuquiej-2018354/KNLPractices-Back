@@ -53,7 +53,7 @@ exports.delete = async (req, res) => {
         let idQuestion = req.params.id;
         let questionDeleted = await Question.findOneAndDelete({ _id: idQuestion });
         if (!questionDeleted) return res.send({ message: 'Question not found and not deleted' });
-        return res.send({ message: 'User deleting succesfully' });
+        return res.send({ message: 'Question deleting succesfully' });
     } catch (e) {
         console.error(e);
         return res.status(404).send({ message: 'Error deleting Question' });

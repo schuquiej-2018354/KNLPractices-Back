@@ -1,12 +1,15 @@
 'use strict'
 
 const QuestionResponse = require('./questionResponse.model');
+const { validateData } = require('../utils/validate');
 const moment = require('moment');
 
 exports.add = async(req, res) => {
     try{
         let data = req.body
         data.time = moment().subtract(10, 'days').calendar();
+        let validate = validateData(data);
+        if(validate) return res.status(400).send(validate)
         const newResponse = new QuestionResponse(data);
         await newResponse.save();
         return res.status(200).send({message: 'response adding'})

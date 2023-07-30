@@ -298,7 +298,6 @@ exports.delete = async (req, res) => {
         let publicationDeleted = await Publication.findOneAndDelete({ _id: idPublication });
         let favoriteDeleted = await Favorite.findOneAndDelete({ publication: idPublication })
         if (!publicationDeleted) return res.send({ message: 'Publication not found and not deleted' });
-        if (!favoriteDeleted) return res.send({ message: 'Favorite not found and not deleted' });
         return res.send({ message: 'Publication deleting succesfully' });
     } catch (e) {
         console.error(e);

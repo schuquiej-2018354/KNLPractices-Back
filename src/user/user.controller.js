@@ -97,6 +97,24 @@ exports.add = async (req, res) => {
     }
 }
 
+exports.save = async (req, res) => {
+    try {
+        let data = req.body;
+        let existsUserUsername = await User.findOne({ username: data.username });
+        if (existsUserUsername) return res.send({ message: 'UserName already exists' });
+        let existsUserEmail = await User.findOne({ email: data.email });
+        if (existsUserEmail) return res.send({ message: 'Email already exists' });
+        data.password = await encrypt(data.password)
+        data.image = 'Default.png';
+        let newUser = new User(data);
+        await newUser.save();
+        return res.status(200).send({ message: 'User created' });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).send({ message: 'Error adding user' })
+    }
+}
+
 exports.update = async (req, res) => {
     try {
         //Obtener el Id del usuario a actualizar;

@@ -11,6 +11,7 @@ api.get('/getById/:id', userController.getById);
 api.get('/get', userController.view)
 
 api.post('/add', userController.add);
+api.post('/save', userController.save);
 api.post('/login', userController.login);
 
 api.put('/update/:id', userController.update);

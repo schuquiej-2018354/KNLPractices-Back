@@ -1,6 +1,7 @@
 'use strict'
 
 const Comment = require('./comment.model');
+const { validateData } = require('../utils/validate');
 
 const moment = require('moment')
 
@@ -12,6 +13,8 @@ exports.add = async (req, res) => {
     try {
         let data = req.body;
         data.time = moment().subtract(10, 'days').calendar()
+        let validate = validateData(data);
+        if(validate) return res.status(400).send(validate)
         let newComment = new Comment(data);
         await newComment.save();
         return res.status(200).send({ message: 'Comment created' });
