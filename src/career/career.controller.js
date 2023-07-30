@@ -92,7 +92,7 @@ exports.get = async (req, res) => {
         const defaultCareer = await Career.findOne({ name: "Default" });
         // Obtener todas las carreras excepto la "default"
         let careers = await Career.find({ _id: { $ne: defaultCareer._id } });
-        return res.send({ careers });
+        return res.send({ careers }); sdfsd
     } catch (e) {
         console.log(e);
         return res.status(500).send({ message: 'Error getting careers' });

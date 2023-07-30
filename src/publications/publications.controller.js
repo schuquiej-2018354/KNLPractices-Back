@@ -1,6 +1,7 @@
 'use strict'
 
 const Publication = require('./publications.model');
+const Favorite = require('../favorite/favorite.model');
 const User = require('../user/user.model');
 const Career = require('../career/career.model');
 const path = require('path')
@@ -295,7 +296,9 @@ exports.delete = async (req, res) => {
     try {
         let idPublication = req.params.id;
         let publicationDeleted = await Publication.findOneAndDelete({ _id: idPublication });
+        let favoriteDeleted = await Favorite.findOneAndDelete({ publication: idPublication })
         if (!publicationDeleted) return res.send({ message: 'Publication not found and not deleted' });
+        if (!favoriteDeleted) return res.send({ message: 'Favorite not found and not deleted' });
         return res.send({ message: 'Publication deleting succesfully' });
     } catch (e) {
         console.error(e);

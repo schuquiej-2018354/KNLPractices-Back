@@ -25,7 +25,8 @@ exports.defaults = async (req, res) => {
             username: 'ADMIN',
             password: 'ADMIN',
             phone: 'ADMIN',
-            career: defaultCareer._id
+            career: defaultCareer._id,
+            role: 'ADMIN'
         }
         admin.password = await encrypt(admin.password);
         let existAdmin = await User.findOne({ username: admin.username });
@@ -68,7 +69,9 @@ exports.login = async (req, res) => {
 
 exports.view = async (req, res) => {
     try {
-        let users = await User.find().populate('career');
+        let usersAdmin = await User.findOne({ role: 'ADMIN' });
+        console.log(usersAdmin);
+        let users = await User.find({ role: { $ne: usersAdmin.role } }).populate('career');
         return res.send({ users })
     } catch (e) {
         console.error(e);
@@ -94,28 +97,6 @@ exports.add = async (req, res) => {
         return res.status(500).send({ message: 'Error adding user' })
     }
 }
-
-/* exports.update = async (req, res) => {
-    try {
-        let idUser = req.params.id;
-        let data = req.body;
-        if (data.password != null) return res.send({ message: 'Password not update' });
-        let existsUserUsername = await User.findOne({ username: data.username });
-        if (existsUserUsername) return res.send({ message: 'UserName already exists' });
-        let existsUserEmail = await User.findOne({ email: data.email });
-        if (existsUserEmail) return res.send({ message: 'Email already exists' });
-        let updatedUser = await User.findOneAndUpdate(
-            { _id: idUser },
-            data,
-            { new: true, upsert: true }
-        )
-        if (!updatedUser) return res.send({ message: 'User not found and not update' });
-        return res.send({ message: 'User updated', idUser })
-    } catch (e) {
-        console.error(e);
-        return res.status(500).send({ message: 'Error updating user' })
-    }
-} */
 
 exports.update = async (req, res) => {
     try {
