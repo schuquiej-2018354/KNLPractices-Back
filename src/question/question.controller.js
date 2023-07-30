@@ -48,18 +48,29 @@ exports.update = async (req, res) => {
     }
 }
 
-exports.delete = async (req, res) => {
+/* exports.delete = async (req, res) => {
     try {
-        let idQuestion = req.params.id;
-        let questionDeleted = await User.findOneAndDelete({ _id: idQuestion });
-        if (!questionDeleted) return res.send({ message: 'Account not found and not deleted' });
+        const { id } = req.params;
+        let questionDeleted = await Question.findOneAndDelete({ _id: id });
+        if (!questionDeleted) return res.send({ message: 'Question not found and not deleted' });
         return res.send({ message: 'Question deleting succesfully' });
     } catch (e) {
         console.error(e);
         return res.status(500).send({ message: 'Error deleting question' });
     }
-}
+} */
 
+exports.delete = async (req, res) => {
+    try {
+        let idQuestion = req.params.id;
+        let questionDeleted = await Question.findOneAndDelete({ _id: idQuestion });
+        if (!questionDeleted) return res.send({ message: 'Question not found and not deleted' });
+        return res.send({ message: 'User deleting succesfully' });
+    } catch (e) {
+        console.error(e);
+        return res.status(404).send({ message: 'Error deleting Question' });
+    }
+}
 
 exports.getById = async (req, res) => {
     try {

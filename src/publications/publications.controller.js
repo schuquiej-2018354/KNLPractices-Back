@@ -294,7 +294,7 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
     try {
         let idPublication = req.params.id;
-        let publicationDeleted = await User.findOneAndDelete({ _id: idPublication });
+        let publicationDeleted = await Publication.findOneAndDelete({ _id: idPublication });
         if (!publicationDeleted) return res.send({ message: 'Publication not found and not deleted' });
         return res.send({ message: 'Publication deleting succesfully' });
     } catch (e) {
