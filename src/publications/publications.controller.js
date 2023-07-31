@@ -334,7 +334,7 @@ exports.updatePu = async (req, res) => {
             { new: true }
         );
         if (!updatedPublication) return res.status(404).send({ message: 'Publication not found, not updated' });
-        return res.send({ message: 'Publication updated and image uploaded' });
+        return res.send({ message: 'Publication updated' });
     } catch (e) {
         console.error(e);
         return res.status(500).send({ message: 'Error updating publication' })
