@@ -336,6 +336,44 @@ exports.updloadImage = async (req, res) => {
     }
 }
 
+exports.updatePu = async (req, res) => {
+    try {
+        //Obtenemos ID
+        let idPublication = req.params.id;
+        let data = req.body;
+        //Verificamos si existe la publicaion
+        let alreadyImage = await Publication.findOne({ _id: idPublication });
+        //Obtenemos la carpeta de las iamgenes
+        let pathFile = './upload/publication/';
+        //Validamos que si ingresa alguna foto
+        if (req.files && req.files.image && req.files.image.type) {
+            const filePath = req.files.image.path;
+            const fileSplit = filePath.split('\\');
+            const fileName = fileSplit[fileSplit.length - 1];
+            const extension = path.extname(fileName).toLowerCase();
+            const allowedExtensions = ['.png', '.jpg', '.jpeg', '.gif'];
+            if (!allowedExtensions.includes(extension)) {
+                fs.unlinkSync(filePath);
+                return res.status(400).send({ message: 'Invalid extension' });
+            }
+            if (alreadyImage.image && extension !== path.extname(alreadyImage.image).toLowerCase()) {
+                fs.unlinkSync(`${pathFile}${alreadyImage.image}`);
+            }
+            data.image = fileName;
+        }
+        const updatedPublication = await Publication.findOneAndUpdate(
+            { _id: idPublication },
+            data,
+            { new: true }
+        );
+        if (!updatedPublication) return res.status(404).send({ message: 'Publication not found, not updated' });
+        return res.send({ message: 'Publication updated and image uploaded' });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).send({ message: 'Error updating publication' })
+    }
+}
+
 exports.get = async (req, res) => {
     try {
         const publications = await Publication.find().populate('user').populate('career');
