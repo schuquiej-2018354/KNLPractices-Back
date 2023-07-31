@@ -1,6 +1,7 @@
 'use strict'
 
-const Career = require('../career/career.model')
+const Career = require('../career/career.model');
+const Publication = require('../publications/publications.model');
 
 exports.test = (req, res) => {
     return res.send({ message: 'Test career running' });
@@ -9,7 +10,7 @@ exports.test = (req, res) => {
 exports.defaults = async (req, res) => {
     try {
         let carrera = {
-            name: 'Default'
+            name: 'Carrera Eliminada'
         }
         let carreraIn = {
             name: 'Informática'
@@ -78,6 +79,11 @@ exports.delete = async (req, res) => {
         let idCareer = req.params.id;
         let careerDeleted = await Career.findOneAndDelete({ _id: idCareer });
         if (!careerDeleted) return res.send({ message: 'Career not found and not deleted' })
+        let defCareer = await Career.findOne({name: 'Carrera Eliminada'});
+        await Publication.updateMany(
+            { career: idCareer },
+            { career: defCareer._id }
+        );
         return res.send({ message: 'Career deleting' });
     } catch (e) {
         console.log(e);
@@ -89,10 +95,10 @@ exports.delete = async (req, res) => {
 exports.get = async (req, res) => {
     try {
         // Buscar la carrera "default" en la base de datos
-        const defaultCareer = await Career.findOne({ name: "Default" });
+        const defaultCareer = await Career.findOne({ name: "Carrera Eliminada" });
         // Obtener todas las carreras excepto la "default"
         let careers = await Career.find({ _id: { $ne: defaultCareer._id } });
-        return res.send({ careers }); sdfsd
+        return res.send({ careers });
     } catch (e) {
         console.log(e);
         return res.status(500).send({ message: 'Error getting careers' });
