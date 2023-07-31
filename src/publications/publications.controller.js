@@ -136,7 +136,7 @@ exports.defaults = async (req, res) => {
             empress: 'Samsung',
             location: 'Zona 15 12',
             phone: '325698748',
-            description: '',
+            description: '¡Oportunidad de prácticas en Samsung para estudiantes de Dibujo Técnico!¿Eres un estudiante apasionado por el Dibujo Técnico y sueñas con trabajar en una empresa líder de tecnología? ¡Esta es tu oportunidad! Samsung te invita a unirte a nuestro equipo como practicante y desarrollar tus habilidades mientras contribuyes a proyectos innovadores.',
             career: career4._id,
             time: moment().subtract(10, 'days').calendar(),
             hour: moment().format('LTS')
@@ -147,7 +147,7 @@ exports.defaults = async (req, res) => {
             empress: 'Bantrab',
             location: 'Zona 15 12',
             phone: '325698748',
-            description: '',
+            description: '¡Oportunidad de prácticas en Bantrab para estudiantes de Dibujo Técnico!¿Eres un estudiante apasionado por el Dibujo Técnico y te gustaría aplicar tus habilidades en el sector financiero? ¡Bantrab te brinda la oportunidad de crecer profesionalmente como practicante en nuestro equipo!',
             career: career4._id,
             time: moment().subtract(10, 'days').calendar(),
             hour: moment().format('LTS')
@@ -158,7 +158,7 @@ exports.defaults = async (req, res) => {
             empress: 'Telgua',
             location: 'Zona 15 12',
             phone: '325698748',
-            description: '',
+            description: '¡Oportunidad de prácticas en Telgua para estudiantes de Electrónica! ¿Eres un estudiante apasionado por la electrónica y deseas adquirir experiencia en una empresa líder en el sector de las telecomunicaciones? ¡Telgua te invita a formar parte de nuestro equipo como practicante y ser parte de la revolución tecnológica!',
             career: career5._id,
             time: moment().subtract(10, 'days').calendar(),
             hour: moment().format('LTS')
@@ -169,7 +169,7 @@ exports.defaults = async (req, res) => {
             empress: 'CDAG',
             location: 'Zona 15 12',
             phone: '325698748',
-            description: '',
+            description: '¡Oportunidad de prácticas en CDAG para estudiantes de Electrónica!  ¿Eres un estudiante apasionado por la electrónica y te gustaría tener la oportunidad de poner en práctica tus conocimientos en una empresa líder en tecnología? CDAG te invita a unirte a nuestro equipo como practicante y vivir una experiencia enriquecedora en el mundo de la electrónica!',
             career: career5._id,
             time: moment().subtract(10, 'days').calendar(),
             hour: moment().format('LTS')
@@ -180,7 +180,7 @@ exports.defaults = async (req, res) => {
             empress: 'Google',
             location: 'Zona 15 12',
             phone: '325698748',
-            description: '',
+            description: '¡Oportunidad de prácticas en Google para estudiantes de Electrónica! ¿Eres un estudiante entusiasta de Electrónica y sueñas con formar parte de una empresa líder en tecnología y electrónica de consumo? Google te invita a unirte a nuestro equipo como practicante y dar tus primeros pasos hacia una emocionante carrera profesional!',
             career: career5._id,
             time: moment().subtract(10, 'days').calendar(),
             hour: moment().format('LTS')
