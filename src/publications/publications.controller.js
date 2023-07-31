@@ -26,7 +26,7 @@ exports.defaults = async (req, res) => {
             empress: 'Nestle',
             location: 'Zona 14 21-78',
             phone: '45698748',
-            description: '',
+            description: 'Nestlé está buscando talentosos practicantes en el área de informática para unirse a nuestro equipo y contribuir con su creatividad y habilidades técnicas. Como practicante, tendrás la oportunidad de sumergirte en proyectos innovadores, trabajar junto a profesionales experimentados y adquirir un valioso conocimiento práctico.',
             career: career1._id,
             time: moment().subtract(10, 'days').calendar(),
             hour: moment().format('LTS')
@@ -37,7 +37,7 @@ exports.defaults = async (req, res) => {
             empress: 'Walmart',
             location: 'Zona 17',
             phone: '74125638',
-            description: '',
+            description: 'Como practicante en el área de informática, tendrás la oportunidad de trabajar con un equipo altamente capacitado y experimentado, enfrentando desafíos innovadores y contribuyendo a proyectos clave. Desde el desarrollo de software hasta la gestión de datos y la ciberseguridad, estarás inmerso en un ambiente de aprendizaje dinámico que te permitirá crecer tanto profesional como personalmente. En Walmart, valoramos la diversidad de pensamiento y la creatividad, por lo que serás alentado a proponer nuevas ideas y soluciones. Tu voz será escuchada y tus aportes serán valorados.',
             career: career1._id,
             time: moment().subtract(10, 'days').calendar(),
             hour: moment().format('LTS')
@@ -48,7 +48,7 @@ exports.defaults = async (req, res) => {
             empress: 'Adidas',
             location: 'Zona 21 5-12',
             phone: '45236987',
-            description: '',
+            description: '¿Eres estudiante de Kinal y apasionado por la informática? ¡Esta es tu oportunidad de destacar en un gigante de la industria deportiva como Adidas! Actualmente, Adidas está en busca de practicantes talentosos para unirse a su equipo de informática. Esta experiencia de prácticas te permitirá sumergirte en un entorno dinámico y colaborativo, trabajando junto a profesionales experimentados en proyectos innovadores. Aprenderás de primera mano cómo se aplican las últimas tecnologías en el desarrollo de soluciones creativas para desafíos de la industria.',
             career: career1._id,
             time: moment().subtract(10, 'days').calendar(),
             hour: moment().format('LTS')
@@ -59,7 +59,7 @@ exports.defaults = async (req, res) => {
             empress: 'Honda',
             location: 'Zona 8 5-12',
             phone: '25478965',
-            description: '',
+            description: 'Si eres estudiante de mecánica y estás ansioso por aplicar tus conocimientos en un ambiente profesional y emocionante, ¡esta es la oportunidad perfecta para ti! Honda, una de las compañías líderes en la industria automotriz, está buscando alumnos de mecánica talentosos y apasionados para formar parte de su equipo de prácticas. tu estancia en Honda, tendrás la oportunidad de trabajar con expertos en la industria, aprender sobre las últimas tecnologías automotrices y ganar experiencia práctica en el mantenimiento y reparación de vehículos de clase mundial',
             career: career2._id,
             time: moment().subtract(10, 'days').calendar(),
             hour: moment().format('LTS')
@@ -70,7 +70,7 @@ exports.defaults = async (req, res) => {
             empress: 'Toyota',
             location: 'Zona 1 5-12',
             phone: '14789625',
-            description: '',
+            description: '¡Atención estudiantes de Mecánica! Toyota te brinda la oportunidad de unirte a nuestro equipo como practicante y sumergirte en el mundo de la tecnología automotriz líder a nivel mundial. Como practicante en Toyota, tendrás la posibilidad de trabajar junto a ingenieros y expertos en automoción, adquiriendo experiencia práctica y conocimientos invaluables que complementarán tu formación académica. Podrás poner en práctica tus habilidades en un entorno profesional y emocionante, mientras contribuyes al desarrollo de vehículos innovadores y sostenibles.',
             career: career2._id,
             time: moment().subtract(10, 'days').calendar(),
             hour: moment().format('LTS')
@@ -254,9 +254,7 @@ exports.add = async (req, res) => {
             return res.status(400).send({ message: 'No image file provided' });
         }
         const filePath = req.files.image.path;
-        console.log(filePath);
         const fileSplit = filePath.split('\\');
-        console.log(fileSplit);
         const fileName = fileSplit[2];
         const extension = path.extname(fileName).toLowerCase();
         const allowedExtensions = ['.png', '.jpg', '.jpeg', '.gif'];
@@ -302,37 +300,6 @@ exports.delete = async (req, res) => {
     } catch (e) {
         console.error(e);
         return res.status(500).send({ message: 'Error deleted publication' })
-    }
-}
-
-exports.updloadImage = async (req, res) => {
-    try {
-        let publicationId = req.params.id;
-        let alreadyImage = await Publication.findOne({ _id: publicationId })
-        let pathFile = './upload/publication/'
-        if (!req.files.image || !req.files.image.type) return res.status(400).send({ message: 'Havent sent image' })
-        const filePath = req.files.image.path
-        const fileSplit = filePath.split('\\')
-        const fileName = fileSplit[2]
-        const extension = path.extname(fileName).toLowerCase();
-        const allowedExtensions = ['.png', '.jpg', '.jpeg', '.gif'];
-        if (!allowedExtensions.includes(extension)) {
-            fs.unlinkSync(filePath)
-            return res.status(400).send({ message: 'Invalid extension' })
-        }
-        if (alreadyImage.image && extension !== path.extname(alreadyImage.image).toLowerCase()) {
-            fs.unlinkSync(`${pathFile}${alreadyImage.image}`)
-        }
-        const updatedPublication = await Publication.findOneAndUpdate(
-            { _id: publicationId },
-            { image: fileName },
-            { new: true }
-        )
-        if (!updatedPublication) return res.status(404).send({ message: 'publication not found, not updated' })
-        return res.send({ message: 'Uploaded image' })
-    } catch (e) {
-        console.error(e);
-        return res.status(500).send({ message: 'Error upload image' });
     }
 }
 
@@ -430,5 +397,3 @@ exports.getUser = async (req, res) => {
         return res.status(500).send({ message: 'Error getting image' })
     }
 }
-
-
