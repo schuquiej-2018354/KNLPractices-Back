@@ -398,6 +398,7 @@ exports.getById = async (req, res) => {
 exports.getByCareer = async (req, res) => {
     try {
         const { id } = req.params;
+        console.log(id);
         const publications = await Publication.find({ career: id }).populate('user').populate('career');
         if (!publications) return res.send({ message: 'There are no publications' })
         return res.status(200).send({ publications });

@@ -16,7 +16,7 @@ exports.test = (req, res) => {
 
 exports.defaults = async (req, res) => {
     try {
-        let defaultCareer = await Career.findOne({ name: 'Default' })
+        let defaultCareer = await Career.findOne({ name: 'Carrera Eliminada' })
         let admin = {
             image: 'Default.png',
             name: 'ADMIN',
