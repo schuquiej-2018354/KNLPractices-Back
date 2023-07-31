@@ -35,13 +35,13 @@ exports.update = async (req, res) => {
     try {
         let idQuestion = req.params.id;
         let data = req.body;
-        let updatedQuestion = Question.findOneAndUpdate(
+        let updatedQuestion = await Question.findOneAndUpdate(
             { _id: idQuestion },
             data,
             { new: true }
         )
         if (!updatedQuestion) return res.send({ message: 'Question not found and not update' });
-        return res.send({ message: 'Question updated', idUser })
+        return res.send({ message: 'Question updated' })
     } catch (e) {
         console.error(e);
         return res.status(500).send({ message: 'Error updating question' });
