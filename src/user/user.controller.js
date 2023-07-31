@@ -9,6 +9,7 @@ const { createToken } = require('../utils/jwt');
 const upload = require('../multer/multer');
 const path = require('path');
 const fs = require('fs');
+const { deleteMany } = require('../publications/publications.model');
 
 exports.test = (req, res) => {
     return res.send({ message: 'Test user running' });
@@ -183,6 +184,8 @@ exports.delete = async (req, res) => {
         let idUser = req.params.id;
         let userDeleted = await User.findOneAndDelete({ _id: idUser });
         if (!userDeleted) return res.send({ message: 'Account not found and not deleted' });
+        await Publication.deleteMany({ user: idUser });
+        await Question.deleteMany({ user: idUser });
         return res.send({ message: 'User deleting succesfully' });
     } catch (e) {
         console.error(e);
