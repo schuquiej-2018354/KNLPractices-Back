@@ -81,7 +81,7 @@ exports.defaults = async (req, res) => {
             empress: 'Mazda',
             location: 'Zona 15 12',
             phone: '325698748',
-            description: '',
+            description: 'Tendrás la emocionante oportunidad de formar parte de nuestro equipo altamente capacitado y apasionado por la marca Mazda. Serás responsable de realizar servicios de mantenimiento preventivo, reparaciones y diagnósticos en vehículos Mazda, asegurando que se cumplan los más altos estándares de calidad y satisfacción del cliente.',
             career: career2._id,
             time: moment().subtract(10, 'days').calendar(),
             hour: moment().format('LTS')
@@ -92,7 +92,7 @@ exports.defaults = async (req, res) => {
             empress: 'Eggsa',
             location: 'Zona 15 12',
             phone: '25478596',
-            description: '',
+            description: 'Como practicante en EGSA, te ofrecemos una experiencia enriquecedora en el área de electricidad industrial. Tendrás la oportunidad de trabajar en proyectos desafiantes y aprender de profesionales experimentados en el campo. Si estás buscando una experiencia de práctica que te permita crecer en el área de electricidad industrial y contribuir al éxito de proyectos innovadores, te invitamos a postularte para unirte a nuestro equipo en EGSA como Practicante de Electricidad Industrial. ¡Esperamos con entusiasmo recibir tu solicitud y darte la bienvenida a esta apasionante experiencia de aprendizaje en nuestra empresa!',
             career: career3._id,
             time: moment().subtract(10, 'days').calendar(),
             hour: moment().format('LTS')
@@ -103,7 +103,7 @@ exports.defaults = async (req, res) => {
             empress: 'HP',
             location: 'Zona 15 12',
             phone: '325698748',
-            description: '',
+            description: 'Como practicante en HP, te ofrecemos una experiencia enriquecedora en el área de electricidad industrial. Podrás trabajar junto a profesionales experimentados, participar en proyectos innovadores y adquirir habilidades prácticas que complementarán tu formación académica.',
             career: career3._id,
             time: moment().subtract(10, 'days').calendar(),
             hour: moment().format('LTS')
@@ -114,7 +114,7 @@ exports.defaults = async (req, res) => {
             empress: 'Kemik',
             location: 'Zona 15 12',
             phone: '325698748',
-            description: '',
+            description: 'Si estás buscando una experiencia de práctica profesional que te permita desarrollarte en el área de electricidad industrial y contribuir al éxito de proyectos innovadores, te invitamos a postularte para unirte a nuestro equipo en Kemik como Practicante de Electricidad Industrial. ¡Esperamos con entusiasmo recibir tu solicitud y brindarte la oportunidad de crecer profesionalmente con nosotros!',
             career: career3._id,
             time: moment().subtract(10, 'days').calendar(),
             hour: moment().format('LTS')
@@ -125,7 +125,7 @@ exports.defaults = async (req, res) => {
             empress: 'BI',
             location: 'Zona 15 12',
             phone: '2547896525',
-            description: '',
+            description: 'Como practicante en Banco Industrial, te ofrecemos una experiencia enriquecedora en el área de Dibujo Técnico. Tendrás la oportunidad de trabajar en proyectos relevantes y aprender de profesionales experimentados en el campo. Si estás buscando una experiencia de práctica que te permita crecer en el área de Dibujo Técnico y contribuir a proyectos significativos en una institución líder, te invitamos a postularte para unirte a nuestro equipo en Banco Industrial como Practicante de Dibujo Técnico. ¡Esperamos con entusiasmo recibir tu solicitud y darte la bienvenida a esta apasionante experiencia de aprendizaje en nuestra empresa!',
             career: career4._id,
             time: moment().subtract(10, 'days').calendar(),
             hour: moment().format('LTS')
