@@ -31,6 +31,10 @@ const userSchemma = mongoose.Schema({
     role: {
         type: String,
         uppercase: true
+    },
+    verified: {
+        type: Boolean,
+        default: false
     }
 }, {
     versionKey: false

@@ -70,3 +70,24 @@ exports.getById = async (req, res) => {
         return res.status(500).send({ message: 'Error getting' })
     }
 }
+
+exports.report = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await Question.findOneAndUpdate({_id: id}, { $inc: { reports: 1 }}, { new: true });
+        return res.status(200).send({message: 'reported Question'});
+    }catch(e){
+        console.error(e);
+        return res.status(500).send({message: 'Error reporting'})
+    }
+}
+
+exports.getByReports = async(req, res) => {
+    try{
+        let questions = await Question.find().populate('user').sort({reports: -1});
+        return res.status(200).send({ questions });
+    }catch(e){
+        console.error(e);
+        return res.status(500).send({message: 'Error getting'})
+    }
+}

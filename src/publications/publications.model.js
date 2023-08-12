@@ -33,6 +33,10 @@ const publicationSchemma = mongoose.Schema({
     },
     hour: {
         type: String
+    },
+    reports: {
+        type: Number,
+        default: 0
     }
 }, {
     versionKey: false

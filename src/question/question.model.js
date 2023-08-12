@@ -15,6 +15,10 @@ const questionSchemma = mongoose.Schema({
     },
     time: {
         type: String
+    },
+    reports: {
+        type: Number,
+        default: 0
     }
 }, {
     versionKey: false
