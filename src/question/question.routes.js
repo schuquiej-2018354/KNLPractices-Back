@@ -10,5 +10,7 @@ api.put('/update/:id', questionController.update);
 api.delete('/delete/:id', questionController.delete);
 api.get('/get', questionController.get);
 api.get('/getById/:id', questionController.getById);
+api.get('/getByReports', questionController.getByReports);
+api.put('/report/:id', questionController.report);
 
 module.exports = api;

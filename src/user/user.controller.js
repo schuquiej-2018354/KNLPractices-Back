@@ -27,7 +27,8 @@ exports.defaults = async (req, res) => {
             password: 'ADMIN',
             phone: 'ADMIN',
             career: defaultCareer._id,
-            role: 'ADMIN'
+            role: 'ADMIN',
+            verified: true
         }
         admin.password = await encrypt(admin.password);
         let existAdmin = await User.findOne({ username: admin.username });
@@ -57,7 +58,8 @@ exports.login = async (req, res) => {
                 email: user.email,
                 phone: user.phone,
                 career: user.career,
-                role: user.role
+                role: user.role,
+                verified: user.verified
             }
             return res.send({ message: 'User logged succesfully', token, userLogged })
         }
@@ -201,5 +203,27 @@ exports.getById = async (req, res) => {
     } catch (e) {
         console.log(e);
         return res.status(500).send({ message: 'Error getting career' })
+    }
+}
+
+exports.verify = async(req, res) => {
+    try{
+        const { id } = req.params;
+        const user = await User.findOneAndUpdate({_id: id}, {verified: true}, {new: true});
+        return res.status(200).send({message: 'successfully verified'})
+    }catch(e){
+        console.error(e);
+        return res.status(500).send({message: 'failed to verify'})
+    }
+}
+
+exports.deteleVerify = async(req, res) => {
+    try{
+        const { id } = req.params;
+        const user = await User.findOneAndUpdate({_id: id}, {verified: false}, {new: true});
+        return res.status(200).send({message: 'successfully verified'})
+    }catch(e){
+        console.error(e);
+        return res.status(500).send({message: 'failed to verify'})
     }
 }

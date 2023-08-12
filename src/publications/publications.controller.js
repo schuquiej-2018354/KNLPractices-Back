@@ -398,3 +398,24 @@ exports.getUser = async (req, res) => {
         return res.status(500).send({ message: 'Error getting image' })
     }
 }
+
+exports.report = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await Publication.findOneAndUpdate({_id: id}, { $inc: { reports: 1 }}, { new: true });
+        return res.status(200).send({message: 'reported publication'});
+    }catch(e){
+        console.error(e);
+        return res.status(500).send({message: 'Error reporting'})
+    }
+}
+
+exports.getByReports = async(req, res) => {
+    try{
+        const publications = await Publication.find().populate('user').populate('career').sort({ reports: -1 });
+        return res.status(200).send({ publications });
+    }catch(e){
+        console.error(e);
+        return res.status(500).send({message: 'Error getting'})
+    }
+}

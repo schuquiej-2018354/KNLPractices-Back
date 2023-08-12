@@ -16,6 +16,9 @@ api.post('/login', userController.login);
 
 api.put('/update/:id', userController.update);
 api.put('/update-image/:id', upload.single('image'), userController.updateImage);
+api.put('/verify/:id', userController.verify);
+api.put('/deleteVerify/:id', userController.deteleVerify);
 
 api.delete('/delete/:id', userController.delete);
+
 module.exports = api;

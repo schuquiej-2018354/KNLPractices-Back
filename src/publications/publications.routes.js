@@ -15,6 +15,8 @@ api.get('/get', publicationController.get);
 api.get('/getById/:id', publicationController.getById);
 api.get('/get-image/:fileName', upload, publicationController.getImage)
 api.get('/getByCarrer/:id', publicationController.getByCareer);
-api.get('/getUser/:id', publicationController.getUser)
+api.get('/getUser/:id', publicationController.getUser);
+api.get('/getByReports', publicationController.getByReports);
+api.put('/report/:id', publicationController.report)
 
 module.exports = api;
